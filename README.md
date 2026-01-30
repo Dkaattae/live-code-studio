@@ -71,3 +71,54 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+
+## Testing
+
+This project includes comprehensive test coverage with unit tests, integration tests, and end-to-end (E2E) tests.
+
+### Running Tests
+
+**Unit Tests** (mocked dependencies):
+```sh
+npm test              # Run once
+npm run test:watch    # Watch mode
+```
+
+**Integration Tests** (real Supabase connection):
+```sh
+# First, start local Supabase (requires Docker)
+npm run supabase:start
+
+# Run integration tests
+npm run test:integration
+
+# Stop Supabase when done
+npm run supabase:stop
+```
+
+**E2E Tests** (browser automation with Playwright):
+```sh
+npm run test:e2e       # Run E2E tests
+npm run test:e2e:ui    # Run with Playwright UI
+```
+
+### Test Structure
+
+- **Unit Tests**: `src/**/*.test.{ts,tsx}` - Component and utility tests with mocked dependencies
+- **Integration Tests**: `src/test/integration/**/*.integration.test.ts` - API and real-time feature tests with actual Supabase
+- **E2E Tests**: `e2e/**/*.spec.ts` - Full user workflow tests with Playwright
+
+### Setting Up Local Supabase
+
+Integration tests require a local Supabase instance:
+
+1. Install Docker Desktop
+2. Run `npm run supabase:start` (first run will download Docker images)
+3. Check status with `npm run supabase:status`
+4. Stop with `npm run supabase:stop`
+
+The local instance uses default test credentials defined in `.env.test`.
+
+### CI/CD
+
+All tests can be run in CI environments. Integration tests will need a test Supabase project or local Supabase setup.
